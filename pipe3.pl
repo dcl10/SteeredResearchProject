@@ -27,7 +27,7 @@ my $index_check_ann = $ref_file . ".ann";
 my $index_check_amb = $ref_file . ".amb";
 unless (-e $index_check_bwt && -e $index_check_sa && -e $index_check_ann && -e $index_check_amb) {
  print "No indexed genome for $ref_file\n";
- print "Index $ref_file y/N - This may take a while";
+ print "Index $ref_file y/N - This may take a while\n";
  my $answer = <STDIN>;
  if ($answer eq "y"){
   system "bwa index $ref_file";
