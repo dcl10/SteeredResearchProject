@@ -4,6 +4,7 @@ use warnings;
 
 #script to automate pipeline 3
 #use text file with list of samples and .fa file placed in same directory
+#runs bwa with nice level 10 to prevent it hogging cpu
 
 #check that a list file has been provided 
 unless ($ARGV[0]){
@@ -21,7 +22,9 @@ system "module load samtools/1.3.2";
 #If not, ask user if they want to creat an indexed version
 my $index_check_bwt = $ref_file . ".bwt";
 my $index_check_sa = $ref_file . ".sa";
-unless (-e $index_check_bwt && -e $index_check_sa) {
+my $index_check_ann = $ref_file . ".ann";
+my $index_check_amb = $ref_file . ".amb";
+unless (-e $index_check_bwt && -e $index_check_sa && -e $index_check_ann && -e $index_check_amb) {
  print "No indexed genome for $ref_file\n";
  print "Index $ref_file y/N - This may take a while";
  my $answer = <STDIN>;
@@ -56,15 +59,15 @@ while (my $sample <LIST>){
   #bwa backtrack
   #call bwa aln for each read file
   print "aln $read_1_fq";
-  my $info = `bwa aln -n 2 -l 25 -k 1 -t 4 $indexed $read_1_fq > $read_1_sai`;
+  my $info = `nice -n 10 bwa aln -n 2 -l 25 -k 1 -t 4 $indexed $read_1_fq > $read_1_sai`;
   print LOG $info;
   print "aln $read_2_fq";
-  $info = `bwa aln -n 2 -l 25 -k 1 -t 4 $indexed $read_2_fq > $read_2_sai`;
+  $info = `nice -n 10 bwa aln -n 2 -l 25 -k 1 -t 4 $indexed $read_2_fq > $read_2_sai`;
   print LOG $info;
   
   #call bwa sampe
   print "sampe reads";
-  $info = `bwa sampe $indexed $read_1_sai $read_2_sai $read_1_fq $read_2_fq > $sam_file`;
+  $info = `nice -n 10 bwa sampe $indexed $read_1_sai $read_2_sai $read_1_fq $read_2_fq > $sam_file`;
   print LOG $info;
   
   #run samtools on output of bwa
