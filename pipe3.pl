@@ -17,48 +17,72 @@ my $ref_file = $ARGV[1];
 system "module load bwa/0.7.15";
 system "module load samtools/1.3.2";
 
-#check if an idex version of the ref exists
-#if not create 1
-my $indexed;
+#check if an indexed version of the ref exists
+#If not, ask user if they want to creat an indexed version
+my $index_check_bwt = $ref_file . ".bwt";
+my $index_check_sa = $ref_file . ".sa";
+unless (-e $index_check_bwt && -e $index_check_sa) {
+ print "No indexed genome for $ref_file\n";
+ print "Index $ref_file y/N - This may take a while";
+ my $answer = <STDIN>;
+ if ($answer eq "y"){
+  system "bwa index $ref_file";
+ }
+ else{
+  exit;
+ }
 
 #read through list of samples 
 open (LIST, "$list_file") or die ("could not open $list_file \n");
-while (<LIST>){
-  chomp $_;
+while (my $sample <LIST>){
+  chomp $sample;
   #make a directory for each sample
-  system "mkdir $_";
+  system "mkdir $sample";
   
-  #create a log file 
+  #create a log file
+  my $log_file = $sample . ".log";
+  open (LOG, ">$log_file") or die (could not create $log_file);
+  #print the terminal output of each system call to this file 
   
   #create file names
-  my $read_1_fq = $_ . "_1.fq";
-  my $read_2_fq = $_ . "_2.fq";
+  my $read_1_fq = $sample . "_1.fq";
+  my $read_2_fq = $sample . "_2.fq";
   #These files need to exist in local directory 
   #Add bit here to check they do
-  my $read_1_sai = $_ . "/" . $_ . "_1.sai";
-  my $read_2_sai = $_ . "/" . $_ . "_2.sai";
-  my $sam_file = $_ . "/" . $_ . ".sam";
+  my $read_1_sai = $sample . "/" . $sample . "_1.sai";
+  my $read_2_sai = $sample . "/" . $sample . "_2.sai";
+  my $sam_file = $sample . "/" . $sample . ".sam";
 
-  #call bwa aln for each read file 
-  system "bwa aln -n 2 -l 25 -k 1 -t 4 $indexed $read_1_fq > $read_1_sai";
-  system "bwa aln -n 2 -l 25 -k 1 -t 4 $indexed $read_2_fq > $read_2_sai";
+  #bwa backtrack
+  #call bwa aln for each read file
+  print "aln $read_1_fq";
+  my $info = `bwa aln -n 2 -l 25 -k 1 -t 4 $indexed $read_1_fq > $read_1_sai`;
+  print LOG $info;
+  print "aln $read_2_fq";
+  $info = `bwa aln -n 2 -l 25 -k 1 -t 4 $indexed $read_2_fq > $read_2_sai`;
+  print LOG $info;
   
   #call bwa sampe
-  system "bwa sampe $indexed $read_1_sai $read_2_sai $read_1_fq $read_2_fq > $sam_file";
+  print "sampe reads";
+  $info = `bwa sampe $indexed $read_1_sai $read_2_sai $read_1_fq $read_2_fq > $sam_file`;
+  print LOG $info;
   
   #run samtools on output of bwa
-  my $bam_file = $_ . "/" . $_ . ".bam";
-  my $bam_sorted = $_ . "/" . $_ . "_sorted.bam";
-  my $read_stats = $_ . "/" . $_ . "_stats.txt";
+  my $bam_file = $sample . "/" . $sample . ".bam";
+  my $bam_sorted = $sample . "/" . $sample . "_sorted.bam";
+  my $read_stats = $sample . "/" . $sample . "_stats.txt";
   
   #convert .sam to .bam
-  system "samtools view -S -b $sam_file > $bam_file";
+  print "convert $sam_file to .bam";
+  $info = `samtools view -S -b $sam_file > $bam_file`;
+  print LOG $info;
   
   #sort .bam file
-  system "samtools sort $bam_file -o $bam_sorted";
+  print "sort $bam_file";
+  $info = `samtools sort $bam_file -o $bam_sorted`;
+  print LOG $info;
   
-  #get statistics
-  system "samtools stats $bam_sorted > $read_stats";
+  #last 2 samtools steps !!
   
 }
 close LIST;
