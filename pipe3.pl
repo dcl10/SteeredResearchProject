@@ -10,6 +10,7 @@ use warnings;
 unless ($ARGV[0]){
   print "usage: pipe3.pl [file containing list of sample ids][reference.fa] \n";
   exit;
+}
   
 my $list_file = $ARGV[0];
 my $ref_file = $ARGV[1];
@@ -33,18 +34,19 @@ unless (-e $index_check_bwt && -e $index_check_sa && -e $index_check_ann && -e $
  }
  else{
   exit;
+  }
  }
 
 #read through list of samples 
 open (LIST, "$list_file") or die ("could not open $list_file \n");
-while (my $sample <LIST>){
+while (my $sample = <LIST>){
   chomp $sample;
   #make a directory for each sample
   system "mkdir $sample";
   
   #create a log file
   my $log_file = $sample . ".log";
-  open (LOG, ">$log_file") or die (could not create $log_file);
+  open (LOG, ">$log_file") or die ("could not create $log_file");
   #print the terminal output of each system call to this file 
   
   #create file names
@@ -59,15 +61,15 @@ while (my $sample <LIST>){
   #bwa backtrack
   #call bwa aln for each read file
   print "aln $read_1_fq";
-  my $info = `nice -n 10 bwa aln -n 2 -l 25 -k 1 -t 4 $indexed $read_1_fq > $read_1_sai`;
+  my $info = `nice -n 10 bwa aln -n 2 -l 25 -k 1 -t 4 $ref_file $read_1_fq > $read_1_sai`;
   print LOG $info;
   print "aln $read_2_fq";
-  $info = `nice -n 10 bwa aln -n 2 -l 25 -k 1 -t 4 $indexed $read_2_fq > $read_2_sai`;
+  $info = `nice -n 10 bwa aln -n 2 -l 25 -k 1 -t 4 $ref_file $read_2_fq > $read_2_sai`;
   print LOG $info;
   
   #call bwa sampe
   print "sampe reads";
-  $info = `nice -n 10 bwa sampe $indexed $read_1_sai $read_2_sai $read_1_fq $read_2_fq > $sam_file`;
+  $info = `nice -n 10 bwa sampe $ref_file $read_1_sai $read_2_sai $read_1_fq $read_2_fq > $sam_file`;
   print LOG $info;
   
   #run samtools on output of bwa
