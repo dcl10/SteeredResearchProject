@@ -2,8 +2,7 @@
 <html>
     <body>
         <?php
-            echo "hello world!";
+            header("Location: test_site.php");
         ?>
     </body>
-
 </html>
