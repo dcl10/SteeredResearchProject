@@ -2,9 +2,7 @@
 <html>
 <body>
 
-Welcome <?php echo $_POST["name"]; ?><br>
-
-<?php
+Welcome <?php echo $_POST["search"]; ?><br>
     
 
 </body>
