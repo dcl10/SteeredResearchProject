@@ -3,8 +3,7 @@
 <body>
 
 <form action="get_result.php" method="post">
-Name: <input type="text" name="name"><br>
-E-mail: <input type="text" name="email"><br>
+Gene: <input type="text" name="name"><br>
 <input type="submit">
 </form>
 
