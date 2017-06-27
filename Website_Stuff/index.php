@@ -2,7 +2,7 @@
 <html>
     <body>
         <?php
-            header("Location: template.html");
+            header("Location: template.php");
         ?>
     </body>
 </html>

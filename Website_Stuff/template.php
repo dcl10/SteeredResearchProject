@@ -45,6 +45,30 @@
   </style>
 </head>
 <body>
+    
+    <?php
+    // Connect to the database
+    $servername = "localhost";
+    $username = "dcl10";
+    $password = "1-Puddlejumper";
+    $db_name = "TestSeqDB";
+    
+    $conn = new mysqli($servername, $username, $password, $db_name);
+    
+    // Determine if the connection was successful or not
+    if ($conn -> connect_error) {
+        $message = $conn -> connect_error;
+    } else {
+        $message = "Connected successfully";
+    }
+    ?>
+    
+    <?php
+    $output = "";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $input = $_POST["search"];
+    }
+    ?>
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -79,7 +103,7 @@
     </div>
     <div class="col-sm-8 text-left centre"> 
       <h1>Dynamic Environment for Adaptable Display of RNA-seq and Annotations of Toxicogenomic Sequences</h1>
-      <p>This is the voice of the misterons... I mean the introduction to our project o.O</p>
+      <p><?php echo $message; ?></p>
       <hr>
       <h3>Summary</h3>
         <p><strong>This is where we will add a summary of our findings...</strong></p>
@@ -87,11 +111,35 @@
       <hr>
       <h3>Search Gene</h3>
         <p>Search here to view gene data</p>
-        <form action="get_result.php" method="post">
-        <input type=text name="search" placeholder="Enter gene name..."><input type="submit">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="post">
+            <div class="input-group">
+                <input type=text name="search" placeholder="Enter gene name..." class="form-control">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+            </div>
         </form>
+        <?php
+        $sql = "SELECT * FROM Experimental WHERE geneID = \"$input\"";
+        $result = $conn -> query($sql);
+        echo $sql . "<br>";
+        $table = "";
+        if ($input) {
+            
+            if ($result -> num_rows > 0) {
+                $table = "<tr> <th>Gene ID</th><th>Fold Change</th> <tr>";
+                while ($row = $result -> fetch_assoc()) {
+                    $table .= "<tr><td>".$row["geneID"]."</td><td>".$row["foldChange"]."</td></tr>";  
+                    //echo "gene: " .  $row["geneID"] . " " . "fold change: " . $row["foldChange"]."<br>";
+                }
+            } else $table = "<strong>No results today</strong>";
+        }
+        ?>
+        <?php $conn->close();?>
+        <table><?php echo $table;?></table>
         <hr>
-        
     </div>
     <div class="col-sm-2 sidenav">
       <!--<div class="well">
