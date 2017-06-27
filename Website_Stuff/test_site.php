@@ -42,6 +42,6 @@ Gene: <input type="text" name="name" value="<?php echo $output; ?>"><br>
         echo $table;
     } else echo "<strong>No results today</strong>";
     ?>
-    
+    <?php $conn->close();?>
 </body>
 </html>
