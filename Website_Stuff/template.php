@@ -64,9 +64,8 @@
     ?>
     
     <?php
-    $output = "";
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $input = $_POST["search"];
+        $input = htmlspecialchars($_POST["search"]);
     }
     ?>
 
@@ -129,16 +128,19 @@
         if ($input) {
             
             if ($result -> num_rows > 0) {
-                $table = "<tr> <th>Gene ID</th><th>Fold Change</th> <tr>";
+                $table = "<thead><tr> <th>Gene ID</th><th>Fold Change</th> </tr></thead>";
                 while ($row = $result -> fetch_assoc()) {
-                    $table .= "<tr><td>".$row["geneID"]."</td><td>".$row["foldChange"]."</td></tr>";  
+                    $table .= "<tbody><tr><td>".$row["geneID"]."</td><td>".$row["foldChange"]."</td></tr>";  
                     //echo "gene: " .  $row["geneID"] . " " . "fold change: " . $row["foldChange"]."<br>";
                 }
+                $table .= "</tbody>";
             } else $table = "<strong>No results today</strong>";
         }
         ?>
         <?php $conn->close();?>
-        <table><?php echo $table;?></table>
+        <div class="table-responsive">
+            <table class="table table-striped"><?php echo $table;?></table>
+        </div>
         <hr>
     </div>
     <div class="col-sm-2 sidenav">
@@ -153,7 +155,7 @@
 </div>
 
 <footer class="container-fluid text-center">
-  <p>This website is trademarked to DEADRATS. F U A team</p>
+  <p>DEADRATS is a subsidiary of the Dank Bioinformatics Memes Corporation</p>
 </footer>
 
 </body>
