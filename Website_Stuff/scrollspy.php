@@ -25,6 +25,29 @@
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
 
+    <?php
+    // Connect to the database
+    $servername = "localhost";
+    $username = "username";
+    $password = "password";
+    $db_name = "TestSeqDB";
+    
+    $conn = new mysqli($servername, $username, $password, $db_name);
+    
+    // Determine if the connection was successful or not
+    if ($conn -> connect_error) {
+        $message = $conn -> connect_error;
+    } else {
+        $message = "Connected successfully";
+    }
+    ?>
+    
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $input = htmlspecialchars($_POST["search"]);
+    }
+    ?>
+    
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -74,6 +97,7 @@
 <div id="section3" class="container-fluid text-center">
   <h1>Search Gene</h1>
         <p>Search here to view gene data</p>
+        <?php echo "<p>$message</p>";?>
 	<span class="col-sm-2"></span>
 	<div class="col-sm-8">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="post">
@@ -85,7 +109,28 @@
                     </button>
                 </div>
             </div>
-	</form>
+        </form>
+        <?php
+        $sql = "SELECT * FROM Experimental WHERE geneID = \"$input\"";
+        $result = $conn -> query($sql);
+        echo $sql . "<br>";
+        $table = "";
+        if ($input) {
+            
+            if ($result -> num_rows > 0) {
+                $table = "<thead><tr> <th>Gene ID</th><th>Fold Change</th> </tr></thead>";
+                while ($row = $result -> fetch_assoc()) {
+                    $table .= "<tbody><tr><td>".$row["geneID"]."</td><td>".$row["foldChange"]."</td></tr>";  
+                    //echo "gene: " .  $row["geneID"] . " " . "fold change: " . $row["foldChange"]."<br>";
+                }
+                $table .= "</tbody>";
+            } else $table = "<strong>No results today</strong>";
+        }
+        ?>
+        <?php $conn->close();?>
+        <div class="table-responsive">
+            <table class="table"><?php echo $table;?></table>
+        </div>
 	</div>
 	<span class="col-sm-2"></span>
 </div>
