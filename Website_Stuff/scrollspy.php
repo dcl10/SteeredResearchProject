@@ -100,7 +100,7 @@
         <?php echo "<p>$message</p>";?>
 	<span class="col-sm-2"></span>
 	<div class="col-sm-8">
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="post">
+        <form action="<?php echo htmlspecialchars("scrollspy.php#section3")?>" method="post">
             <div class="input-group">
                 <input type=text name="search" placeholder="Enter gene name..." class="form-control">
                 <div class="input-group-btn">
@@ -111,7 +111,7 @@
             </div>
         </form>
         <?php
-        $sql = "SELECT * FROM Experimental WHERE geneID = \"$input\"";
+        $sql = "SELECT * FROM Experimental WHERE geneID LIKE \"%$input%\"";
         $result = $conn -> query($sql);
         echo $sql . "<br>";
         $table = "";
