@@ -11,16 +11,16 @@
   body {
       position: relative; 
   }
-  #section1 {padding-top:50px;height:500px;color: #fff; background-color: #1E88E5;}
-  #section2 {padding-top:50px;height:500px;color: #fff; background-color: #673ab7;}
-  #section3 {padding-top:50px;height:500px;color: #fff; background-color: #ff9800;}
-  #section4 {padding-top:50px;height:500px;color: #fff; background-color: #00bcd4;}
-  #section51 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
-  #section52 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
-  #section53 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
-  #section54 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
-  #section55 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
-  #section56 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
+  #section1 {padding-top:50px;color: #fff; background-color: #1E88E5;}
+  #section2 {padding-top:50px;color: #fff; background-color: #673ab7;}
+  #section3 {padding-top:50px;color: #fff; background-color: #ff9800;}
+  #section4 {padding-top:50px;color: #fff; background-color: #00bcd4;}
+  #section51 {padding-top:50px;color: #fff; background-color: #009688;}
+  #section52 {padding-top:50px;color: #fff; background-color: #009688;}
+  #section53 {padding-top:50px;color: #fff; background-color: #009688;}
+  #section54 {padding-top:50px;color: #fff; background-color: #009688;}
+  #section55 {padding-top:50px;color: #fff; background-color: #009688;}
+  #section56 {padding-top:50px;color: #fff; background-color: #009688;}
   </style>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -28,7 +28,7 @@
     <?php
     // Connect to the database
     $servername = "localhost";
-    $username = "username";
+    $username = "user";
     $password = "password";
     $db_name = "TestSeqDB";
     
