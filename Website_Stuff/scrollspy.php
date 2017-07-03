@@ -42,11 +42,7 @@
     }
     ?>
     
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $input = htmlspecialchars($_POST["search"]);
-    }
-    ?>
+
     
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
@@ -111,11 +107,13 @@
             </div>
         </form>
         <?php
-        $sql = "SELECT * FROM Experimental WHERE geneID LIKE \"%$input%\"";
-        $result = $conn -> query($sql);
-        echo $sql . "<br>";
-        $table = "";
-        if ($input) {
+    	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        	$input = htmlspecialchars($_POST["search"]);
+			$sql = "SELECT * FROM Experimental WHERE geneID LIKE \"%$input%\"";
+        	$result = $conn -> query($sql);
+	        echo $sql . "<br>";
+    	    $table = "";
+    	    if ($input) {
             
             if ($result -> num_rows > 0) {
                 $table = "<thead><tr> <th>Gene ID</th><th>Fold Change</th> </tr></thead>";
@@ -124,7 +122,10 @@
                     }
                 $table .= "</tbody>";
             } else $table = "<strong>No results today</strong>";
-        }
+    	    }
+    	} else { 
+			$table = "";
+		}
         ?>
         <?php $conn->close();?>
         <form action="<?php echo htmlspecialchars("results.php")?>" method="post">
