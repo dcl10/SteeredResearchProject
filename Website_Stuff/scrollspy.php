@@ -120,9 +120,9 @@
             if ($result -> num_rows > 0) {
                 $table = "<thead><tr> <th>Gene ID</th><th>Fold Change</th> </tr></thead>";
                 while ($row = $result -> fetch_assoc()) {
-                    $table .= "<tbody><tr><td>".$row["geneID"]."</td><td>".$row["foldChange"]."</td></tr>";  
-                    //echo "gene: " .  $row["geneID"] . " " . "fold change: " . $row["foldChange"]."<br>";
-                }
+                    $table .= "<tbody><tr><td>".$row["geneID"]."</td><td>".$row["foldChange"].
+                        "</td><td><button class=\"btn btn-default\" type=\"submit\"><i class=\"glyphicon glyphicon-search\"></i></button></td></tr>";  
+                    }
                 $table .= "</tbody>";
             } else $table = "<strong>No results today</strong>";
         }
