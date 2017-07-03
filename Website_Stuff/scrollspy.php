@@ -28,8 +28,8 @@
     <?php
     // Connect to the database
     $servername = "localhost";
-    $username = "dcl10";
-    $password = "1-Puddlejumper";
+    $username = "username";
+    $password = "password";
     $db_name = "TestSeqDB";
     
     $conn = new mysqli($servername, $username, $password, $db_name);
