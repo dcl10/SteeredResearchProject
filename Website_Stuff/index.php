@@ -2,7 +2,7 @@
 <html>
     <body>
         <?php
-            header("Location: template.php");
+            header("Location: scrollspy.php");
         ?>
     </body>
 </html>
