@@ -27,9 +27,9 @@
 
     <?php
     // Connect to the database
-    $servername = "localhost";
-    $username = "username";
-    $password = "password";
+    $servername = "127.0.0.1";
+    $username = "ej104";
+    $password = "Forgetmenot6";
     $db_name = "TestSeqDB";
     
     $conn = new mysqli($servername, $username, $password, $db_name);
@@ -107,32 +107,42 @@
             </div>
         </form>
         <?php
-    	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    	if ($_SERVER["REQUEST_METHOD"] == "POST"):
         	$input = htmlspecialchars($_POST["search"]);
 			$sql = "SELECT * FROM Experimental WHERE geneID LIKE \"%$input%\"";
         	$result = $conn -> query($sql);
 	        echo $sql . "<br>";
-    	    $table = "";
-    	    if ($input) {
             
-            if ($result -> num_rows > 0) {
-                $table = "<thead><tr> <th>Gene ID</th><th>Fold Change</th> </tr></thead>";
-                while ($row = $result -> fetch_assoc()) {
-                    $table .= "<tbody><tr><td><input type=\"submit\" class=\"btn btn-default\" value=\"".$row["geneID"]."\"></td><td>".$row["foldChange"]."</td></tr>";
-                    }
-                $table .= "</tbody>";
-            } else $table = "<strong>No results today</strong>";
-    	    }
-    	} else { 
-			$table = "";
-		}
-        ?>
-        <?php $conn->close();?>
-        <form action="<?php echo htmlspecialchars("results.php")?>" method="post">
-            <div class="table-responsive">
-                <table class="table"><?php echo $table;?></table>
-            </div>
-        </form> 
+            if ($result -> num_rows > 0): ?>
+		<form action="<?php echo htmlspecialchars("results.php")?>" method="post">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Gene ID</th>
+							<th>Fold Change</th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php while ($row = $result -> fetch_object()): ?>
+					<tr>
+						<td><input type="submit" class="btn btn-default" value="<?php echo $row->geneID ?>" /></td>
+						<td><?php echo $row->foldChange ?></td>
+					</tr>
+					<?php endwhile; ?>
+					</tbody>
+				</table>
+			</div>
+		</form>
+		<?php else: ?>
+			<p><em>No results.</em></p>
+		<?php endif; ?>
+		<?php else: ?>
+			<br />
+		<?php
+			endif; 
+			$conn->close();
+		?>
 	</div>
 	<span class="col-sm-2"></span>
 </div>
