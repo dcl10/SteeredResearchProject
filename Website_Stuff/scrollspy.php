@@ -28,8 +28,8 @@
     <?php
     // Connect to the database
     $servername = "localhost";
-    $username = "user";
-    $password = "password";
+    $username = "dcl10";
+    $password = "1-Puddlejumper";
     $db_name = "TestSeqDB";
     
     $conn = new mysqli($servername, $username, $password, $db_name);
@@ -120,17 +120,18 @@
             if ($result -> num_rows > 0) {
                 $table = "<thead><tr> <th>Gene ID</th><th>Fold Change</th> </tr></thead>";
                 while ($row = $result -> fetch_assoc()) {
-                    $table .= "<tbody><tr><td>".$row["geneID"]."</td><td>".$row["foldChange"].
-                        "</td><td><button class=\"btn btn-default\" type=\"submit\"><i class=\"glyphicon glyphicon-search\"></i></button></td></tr>";  
+                    $table .= "<tbody><tr><td><input type=\"submit\" class=\"btn btn-default\" value=\"".$row["geneID"]."\"></td><td>".$row["foldChange"]."</td></tr>";
                     }
                 $table .= "</tbody>";
             } else $table = "<strong>No results today</strong>";
         }
         ?>
         <?php $conn->close();?>
-        <div class="table-responsive">
-            <table class="table"><?php echo $table;?></table>
-        </div>
+        <form action="<?php echo htmlspecialchars("results.php")?>" method="post">
+            <div class="table-responsive">
+                <table class="table"><?php echo $table;?></table>
+            </div>
+        </form> 
 	</div>
 	<span class="col-sm-2"></span>
 </div>
