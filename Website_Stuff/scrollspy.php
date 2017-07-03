@@ -163,13 +163,11 @@
 </div>
 <div id="section53" class="container-fluid">
   <h1>Dan</h1>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+    <p>Web co-developer</p>
 </div>
 <div id="section54" class="container-fluid">
   <h1>Elinor</h1>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+    <p>Web co-developer</p>
 </div>
 <div id="section55" class="container-fluid">
   <h1>James</h1>
