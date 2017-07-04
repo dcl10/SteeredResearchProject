@@ -27,10 +27,12 @@
 
     <?php
     // Connect to the database
-    $servername = "127.0.0.1";
-    $username = "ej104";
-    $password = "Forgetmenot6";
-    $db_name = "TestSeqDB";
+    $db = parse_ini_file("config_file.ini");
+    
+    $servername = $db['host'];
+    $username = $db['user'];
+    $password = $db['pass'];
+    $db_name = $db['name'];
     
     $conn = new mysqli($servername, $username, $password, $db_name);
     
