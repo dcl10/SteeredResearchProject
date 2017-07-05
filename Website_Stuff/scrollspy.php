@@ -122,14 +122,12 @@
 					<thead>
 						<tr>
 							<th>Gene ID</th>
-							<th>Fold Change</th>
 						</tr>
 					</thead>
 					<tbody>
 					<?php while ($row = $result -> fetch_object()): ?>
 					<tr>
 						<td><input type="submit" class="btn btn-default" value="<?php echo $row->geneID ?>" /></td>
-						<td><?php echo $row->foldChange ?></td>
 					</tr>
 					<?php endwhile; ?>
 					</tbody>
