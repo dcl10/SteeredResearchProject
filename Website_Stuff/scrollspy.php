@@ -21,6 +21,12 @@
   #section54 {padding-top:50px;color: #fff; background-color: #009688;}
   #section55 {padding-top:50px;color: #fff; background-color: #009688;}
   #section56 {padding-top:50px;color: #fff; background-color: #009688;}
+      
+  footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+      }
   </style>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -158,8 +164,7 @@
 </div>
 <div id="section52" class="container-fluid">
   <h1>Carey</h1>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+  <p>The concise one</p>
 </div>
 <div id="section53" class="container-fluid">
   <h1>Dan</h1>
@@ -176,9 +181,12 @@
 </div>
 <div id="section56" class="container-fluid">
   <h1>Raymond</h1>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+    <p>He who is verbose</p>
 </div>
+    
+    <footer class="container-fluid text-center">
+  <p>DEADRATS is a subsidiary of the Dank Bioinformatics Memes Corporation</p>
+</footer>
 
 </body>
 </html>
