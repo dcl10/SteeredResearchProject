@@ -27,6 +27,7 @@
       color: white;
       padding: 15px;
       }
+
   </style>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -152,10 +153,15 @@
 	</div>
 	<span class="col-sm-2"></span>
 </div>
-<div id="section4" class="container-fluid">
+<div id="section4" class="container-fluid text-center">
   <h1>Section 4 Submenu 1</h1>
   <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
   <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+    <span class="col-sm-2"></span>
+    <div class="col-sm-8 center-block">
+    <embed src="http://genome.ucsc.edu/cgi-bin/hgRenderTracks?db=hg19&position=chr9%3A136130563-136150630bigDataUrl=https://localhost/accepted_hits.bam" height="500px" width="100%">
+    </div>
+    <span class="col-sm-2"></span>
 </div>
 <div id="section51" class="container-fluid">
   <h1>Amy</h1>
