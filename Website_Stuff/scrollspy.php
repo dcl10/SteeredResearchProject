@@ -15,6 +15,7 @@
   #section2 {padding-top:50px;color: #fff; background-color: #673ab7;}
   #section3 {padding-top:50px;color: #fff; background-color: #ff9800;}
   #section4 {padding-top:50px;color: #fff; background-color: #00bcd4;}
+  #section5 {padding-top:50px;color: #fff; background-color: #009688;}
   #section51 {padding-top:50px;color: #fff; background-color: #009688;}
   #section52 {padding-top:50px;color: #fff; background-color: #009688;}
   #section53 {padding-top:50px;color: #fff; background-color: #009688;}
@@ -51,8 +52,7 @@
     }
     ?>
     
-
-    
+<!-- Building the top navigation bar -->    
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -70,12 +70,12 @@
           <li><a href="#section1">Home</a></li>
           <li><a href="#section2">Summary</a></li>
           <li><a href="#section3">Search Gene</a></li>
-	<li><a href="#section4">Section4</a></li>
+	<li><a href="#section4">Genome Browser</a></li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">The Team <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#section51">Amy</a></li>
               <li><a href="#section52">Carey</a></li>
-		<li><a href="#section53">Dan</a></li>
+		<li><a href="#section53">Daniel</a></li>
 		<li><a href="#section54">Elinor</a></li>
 		<li><a href="#section55">Raymond</a></li>
 		<li><a href="#section56">James</a></li>
@@ -87,18 +87,23 @@
   </div>
 </nav>    
 
+<!-- Title of the page -->
 <div id="section1" class="container-fluid">
     <div class="jumbotron" id="section1">
         <h1>Dynamic Environment for Adaptable Display of RNA-seq and Annotations of Toxicogenomic Sequences</h1>
-        <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-        <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
     </div>
 </div>
+<!-- The summary section -->
 <div id="section2" class="container-fluid text-center">
   <h1>Summary</h1>
 <p><strong>This is where we will add a summary of our findings...</strong></p>
         <p><strong>IF WE HAD ANY!!!1!</strong></p>
 </div>
+<!-- This section lets the user search for a gene in the database and view information on it.
+There form contains a search bar and a button. On action, the form will execute the PHP
+to search the database for the relevant information such as fold change in expression
+and locus.
+-->
 <div id="section3" class="container-fluid text-center">
   <h1>Search Gene</h1>
         <p>Search here to view gene data</p>
@@ -153,44 +158,49 @@
 	</div>
 	<span class="col-sm-2"></span>
 </div>
+<!-- This section contains an embedded UCSC Genome Browser window. -->
 <div id="section4" class="container-fluid text-center">
-  <h1>Section 4 Submenu 1</h1>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+  <h1>Genome Browser</h1>
+  <p>Here you can browse the rat genome and view the BAM tracks</p>
     <span class="col-sm-2"></span>
     <div class="col-sm-8 center-block">
     <embed src="http://genome.ucsc.edu/cgi-bin/hgRenderTracks?db=hg19&position=chr9%3A136130563-136150630bigDataUrl=https://localhost/accepted_hits.bam" height="500px" width="100%">
     </div>
     <span class="col-sm-2"></span>
 </div>
-<div id="section51" class="container-fluid">
-  <h1>Amy</h1>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-  <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+<!-- This section is information about the team members. -->
+<div id="section5" class="container-fluid text-center">
+<h1>The Team</h1>
+<!-- possibly insert group photo -->
 </div>
-<div id="section52" class="container-fluid">
-  <h1>Carey</h1>
+<div id="section51" class="container-fluid text-center">
+  <h2>Amy</h2>
+  <p>Quality Conctrol manager</p>
+</div>
+<div id="section52" class="container-fluid text-center">
+  <h2>Carey</h2>
   <p>The concise one</p>
 </div>
-<div id="section53" class="container-fluid">
-  <h1>Dan</h1>
+<div id="section53" class="container-fluid text-center">
+  <h2>Daniel</h2>
     <p>Web co-developer</p>
 </div>
-<div id="section54" class="container-fluid">
-  <h1>Elinor</h1>
+<div id="section54" class="container-fluid text-center">
+  <h2>Elinor</h2>
+    <p>The numerate one</p>
     <p>Web co-developer</p>
 </div>
-<div id="section55" class="container-fluid">
-  <h1>James</h1>
+<div id="section55" class="container-fluid text-center">
+  <h2>James</h2>
   <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
   <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
 </div>
-<div id="section56" class="container-fluid">
-  <h1>Raymond</h1>
-    <p>He who is verbose</p>
+<div id="section56" class="container-fluid text-center">
+  <h2>Raymond</h2>
+    <p>He who writes in a verbose manner</p>
 </div>
-    
-    <footer class="container-fluid text-center">
+<!-- Let's see who notices... -->
+<footer class="container-fluid text-center">
   <p>DEADRATS is a subsidiary of the Dank Bioinformatics Memes Corporation</p>
 </footer>
 
