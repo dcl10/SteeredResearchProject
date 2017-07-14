@@ -176,7 +176,7 @@ and locus.
         if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["genome"]){
         	$genome = htmlspecialchars($_POST["genome"]);
             if ($genome) {
-                $url = "https://genome.ucsc.edu/cgi-bin/hgTracks?db=$genome&position=chr1&hgct_customText=track%20type=bam%20name=Our_Bam_Trackk%20description=%22The%20BAM%20track%22%20visibility=full%20bigDataUrl=https://localhost/accepted_hits.bam";
+                $url = "https://genome.ucsc.edu/cgi-bin/hgTracks?db=$genome&position=chr1&hgct_customText=track%20type=bam%20name=Our_Bam_Trackk%20description=%22The%20BAM%20track%22%20visibility=full%20bigDataUrl=https://s3.eu-west-2.amazonaws.com/bio-files-storage/accepted_hits.bam";
                 $height = "500px";
                 $width = "100%";
             }
