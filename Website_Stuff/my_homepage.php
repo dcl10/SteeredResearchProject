@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+
+<!--
+    Here the results of the analysis of the effects of Aflatoxin on gene expression in rats from pipeline 5
+    in Wang et al. are presented. The user can search a database of our results and visualise
+    RNASeq reads on an embedded sesson of the UCSC Genome Browser.
+    There is also a nice Easter egg from Daniel at the bottom.
+-->
+
 <html>
 <head>
   <title>DEADRATS</title>
@@ -173,10 +181,15 @@ and locus.
     </div>
     </form><br>
     <?php
+        /*
+            Here the URL to be submitted to the UCSC Genome browser is defined.
+            The user is presented a <form> in the form of button groups allowing them to choose the genome, either rn6 or rn4,
+            and the rat whose bam file they wish to add as a custom track.
+        */
         if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["genome"]){
         	$genome = htmlspecialchars($_POST["genome"]);
             if ($genome) {
-                $url = "https://genome-euro.ucsc.edu/cgi-bin/hgTracks?db=$genome&position=chr1&hgct_customText=track%20type=bam%20name=Our_Bam_Trackk%20description=%22The%20BAM%20track%22%20visibility=full%20bigDataUrl=https://s3.eu-west-2.amazonaws.com/bio-files-storage/accepted_hits.bam";
+                $url = "https://genome-euro.ucsc.edu/cgi-bin/hgTracks?db=$genome&position=chr1&hgct_customText=track%20type=bam%20name=Our_Bam_Track%20description=%22The%20BAM%20track%22%20visibility=full%20bigDataUrl=https://s3.eu-west-2.amazonaws.com/bio-files-storage/accepted_hits.bam";
                 $height = "500px";
                 $width = "100%";
             }
@@ -195,7 +208,7 @@ and locus.
 </div>
 <div id="section51" class="container-fluid text-center">
   <h2>Amy</h2>
-  <p>Quality Conctrol manager</p>
+  <p>Quality Control manager</p>
 </div>
 <div id="section52" class="container-fluid text-center">
   <h2>Carey</h2>
@@ -221,6 +234,9 @@ and locus.
 </div>
 <!-- Let's see who notices... -->
 <footer class="container-fluid text-center">
+    <a class="up-arrow" href="#section1" data-toggle="tooltip" title="TO TOP" style="color: white">
+    <span class="glyphicon glyphicon-chevron-up"></span><br>To Top
+  </a><br><br>
   <p>DEADRATS is a subsidiary of the Dank Bioinformatics Memes Corporation</p>
 </footer>
 
