@@ -42,14 +42,14 @@
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
 
     <?php
-    // Connect to the database
+    // Parse the configuration file and get the credentials for the database
     $db = parse_ini_file("config_file.ini");
-    
     $servername = $db['host'];
     $username = $db['user'];
     $password = $db['pass'];
     $db_name = $db['name'];
     
+    //Connect to the database
     $conn = new mysqli($servername, $username, $password, $db_name);
     
     // Determine if the connection was successful or not
@@ -174,12 +174,24 @@ and locus.
 <div id="section4" class="container-fluid text-center">
   <h1>Genome Browser</h1>
   <p>Here you can browse the rat genome and view the BAM tracks</p>
-    <form action="<?php echo htmlspecialchars("my_homepage.php#section4")?>" method="post">
-    <div class="btn-group">
-        <button class="btn btn-success" type="submit" value="rn6" name="genome">rn6</button>
-        <button class="btn btn-success" type="submit" value="rn4" name="genome">rn4</button>
+    <span class="col-sm-2"></span>
+    <form action="<?php echo htmlspecialchars("my_homepage.php#section4")?>" method="post" class="col-sm-8 form-inline">
+    Choose rat: <div class="form-group">
+        <select class="form-control" name="rat">
+            <option value="Control 1">Control 1</option>
+            <option value="Control 2">Control 2</option>
+            <option value="Experimental 1">Experimental 1</option>
+            <option value="Experimental 2">Experimental 2</option>
+            <option value="Experimental 3">Experimental 3</option>
+        </select>
+        
     </div>
-    </form><br>
+    Choose genome: <div class="btn-group">
+        <input class="btn btn-success" type="submit" value="rn6" name="genome">
+        <input class="btn btn-success" type="submit" value="rn4" name="genome">
+    </div>
+    </form>
+    <span class="col-sm-2"></span>
     <?php
         /*
             Here the URL to be submitted to the UCSC Genome browser is defined.
@@ -189,7 +201,7 @@ and locus.
         if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["genome"]){
         	$genome = htmlspecialchars($_POST["genome"]);
             if ($genome) {
-                $url = "https://genome-euro.ucsc.edu/cgi-bin/hgTracks?db=$genome&position=chr1&hgct_customText=track%20type=bam%20name=Our_Bam_Track%20description=%22The%20BAM%20track%22%20visibility=full%20bigDataUrl=https://s3.eu-west-2.amazonaws.com/bio-files-storage/accepted_hits.bam";
+                $url = "https://genome-euro.ucsc.edu/cgi-bin/hgTracks?db=$genome&position=chr1&hgct_customText=track%20type=bam%20name=Our_Bam_Track%20description=%22The%20BAM%20track%22%20visibility=dense%20bigDataUrl=https://s3.eu-west-2.amazonaws.com/bio-files-storage/accepted_hits.bam";
                 $height = "500px";
                 $width = "100%";
             }
