@@ -192,7 +192,7 @@ and locus.
         <input class="btn btn-success" type="submit" value="rn4" name="genome">
     </div>
     </form>
-    <br><br>
+    <br>
     <span class="col-sm-2"></span><br>
     <?php
         /*
@@ -246,10 +246,10 @@ and locus.
     <embed src="<?php echo $url ?>" height="<?php echo $height ?>" width="<?php echo $width ?>">
     <?php elseif ($_SERVER["REQUEST_METHOD"] == "POST" && !$rat): ?>
     <!-- If the user selects a genome but no rat the user is prompted to choose a rat. -->
-    <p><strong>Select a rat then push one of the genome buttons.</strong></p>
+    <p><strong>Select a rat then push one of the genome buttons.</strong></p><br>
     <?php endif; ?>
     </div>
-    <span class="col-sm-1"></span>
+    <span class="col-sm-1"></span><br>
 </div>
 <!-- This section is information about the team members. -->
 <div id="section5" class="container-fluid text-center">
