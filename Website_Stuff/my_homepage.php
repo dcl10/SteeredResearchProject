@@ -176,8 +176,9 @@ and locus.
   <p>Here you can browse the rat genome and view the BAM tracks</p>
     <span class="col-sm-2"></span>
     <form action="<?php echo htmlspecialchars("my_homepage.php#section4")?>" method="post" class="col-sm-8 form-inline">
-    Choose rat: <div class="form-group">
+    <div class="form-group">
         <select class="form-control" name="rat">
+            <option>Choose rat...</option>
             <option value="Control 1">Control 1</option>
             <option value="Control 2">Control 2</option>
             <option value="Experimental 1">Experimental 1</option>
@@ -191,25 +192,62 @@ and locus.
         <input class="btn btn-success" type="submit" value="rn4" name="genome">
     </div>
     </form>
-    <span class="col-sm-2"></span>
+    <br><br>
+    <span class="col-sm-2"></span><br>
     <?php
         /*
             Here the URL to be submitted to the UCSC Genome browser is defined.
-            The user is presented a <form> in the form of button groups allowing them to choose the genome, either rn6 or rn4,
+            The user is presented a form allowing them to choose the genome, either rn6 or rn4,
             and the rat whose bam file they wish to add as a custom track.
         */
         if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["genome"]){
         	$genome = htmlspecialchars($_POST["genome"]);
-            if ($genome) {
-                $url = "https://genome-euro.ucsc.edu/cgi-bin/hgTracks?db=$genome&position=chr1&hgct_customText=track%20type=bam%20name=Our_Bam_Track%20description=%22The%20BAM%20track%22%20visibility=dense%20bigDataUrl=https://s3.eu-west-2.amazonaws.com/bio-files-storage/accepted_hits.bam";
-                $height = "500px";
-                $width = "100%";
+            if ($genome == "rn6") {
+                switch ($_POST["rat"]) {
+                    case "Control 1" : $rat = "sorted_control1_rn6.bam";
+                        break;
+                    case "Control 2" : $rat = "sorted_control2_rn6.bam";
+                        break;
+                    case "Experimental 1" : $rat = "sorted_afl4_rn6.bam";
+                        break;
+                    case "Experimental 2" : $rat = "sorted_afl6_rn6.bam";
+                        break;
+                    case "Experimental 3" : $rat = "sorted_afl8_rn6.bam";
+                        break;
+                }
             }
+            else {
+                switch ($_POST["rat"]) {
+                    case "Control 1" : $rat = "sorted_control1_rn4.bam";
+                        break;
+                    case "Control 2" : $rat = "sorted_control2_rn4.bam";
+                        break;
+                    case "Experimental 1" : $rat = "sorted_afl4_rn4.bam";
+                        break;
+                    case "Experimental 2" : $rat = "sorted_afl6_rn4.bam";
+                        break;
+                    case "Experimental 3" : $rat = "sorted_afl8_rn4.bam";
+                        break;
+                }
+            }
+            $url = "https://genome.ucsc.edu/cgi-bin/hgTracks?db=$genome&position=chr1&hgct_customText=track%20type=bam%20name=Our_Bam_Track%20description=%22The%20BAM%20track%22%20visibility=full%20bigDataUrl=https://s3.eu-west-2.amazonaws.com/bio-files-storage/$rat";
+            $height = "550px";
+            $width = "100%";
         }
     ?>
     <span class="col-sm-1"></span>
+    <!-- 
+        This div contains the genome browser. It is only visible if there is a server request and the user has
+        defined which rat's BAM they wish to view.
+    -->
     <div class="col-sm-10 center-block">
-    <embed src="<?php echo $url ?>" height="<?php echo $height; ?>" width="<?php echo $width ?>">
+    <?php if ($rat && $_SERVER["REQUEST_METHOD"] == "POST"): ?>
+        <p><?php echo "Current selection: Rat = ".$_POST["rat"].", Genome = ".$_POST["genome"]; ?></p>
+    <embed src="<?php echo $url ?>" height="<?php echo $height ?>" width="<?php echo $width ?>">
+    <?php elseif ($_SERVER["REQUEST_METHOD"] == "POST" && !$rat): ?>
+    <!-- If the user selects a genome but no rat the user is prompted to choose a rat. -->
+    <p><strong>Select a rat then push one of the genome buttons.</strong></p>
+    <?php endif; ?>
     </div>
     <span class="col-sm-1"></span>
 </div>
