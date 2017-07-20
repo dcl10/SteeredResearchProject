@@ -43,7 +43,7 @@
 
     <?php
     // Parse the configuration file and get the credentials for the database
-    $db = parse_ini_file("config_file.ini");
+    $db = parse_ini_file("../config_file.ini");
     $servername = $db['host'];
     $username = $db['user'];
     $password = $db['pass'];
@@ -86,8 +86,8 @@
               <li><a href="#section52">Carey</a></li>
 		      <li><a href="#section53">Daniel</a></li>
 		      <li><a href="#section54">Elinor</a></li>
-		      <li><a href="#section55">Raymond</a></li>
-		      <li><a href="#section56">James</a></li>
+		      <li><a href="#section55">James</a></li>
+		      <li><a href="#section56">Raymond</a></li>
             </ul>
           </li>
         </ul>
@@ -230,7 +230,7 @@ and locus.
                         break;
                 }
             }
-            $url = "https://genome.ucsc.edu/cgi-bin/hgTracks?db=$genome&position=chr1&hgct_customText=track%20type=bam%20name=Our_Bam_Track%20description=%22The%20BAM%20track%22%20visibility=full%20bigDataUrl=https://s3.eu-west-2.amazonaws.com/bio-files-storage/$rat";
+            $url = "https://genome.ucsc.edu/cgi-bin/hgTracks?db=$genome&position=apc&hgct_customText=track%20type=bam%20name=Our_Bam_Track%20description=%22The%20BAM%20track%22%20visibility=full%20bigDataUrl=https://s3.eu-west-2.amazonaws.com/bio-files-storage/$rat";
             $height = "550px";
             $width = "100%";
         }
@@ -241,10 +241,10 @@ and locus.
         defined which rat's BAM they wish to view.
     -->
     <div class="col-sm-10 center-block">
-    <?php if ($rat && $_SERVER["REQUEST_METHOD"] == "POST"): ?>
+    <?php if ($rat && $_SERVER["REQUEST_METHOD"] == "POST" && $_POST["genome"]): ?>
         <p><?php echo "Current selection: Rat = ".$_POST["rat"].", Genome = ".$_POST["genome"]; ?></p>
     <embed src="<?php echo $url ?>" height="<?php echo $height ?>" width="<?php echo $width ?>">
-    <?php elseif ($_SERVER["REQUEST_METHOD"] == "POST" && !$rat): ?>
+    <?php elseif ($_SERVER["REQUEST_METHOD"] == "POST" && !$rat && $_POST["genome"]): ?>
     <!-- If the user selects a genome but no rat the user is prompted to choose a rat. -->
     <p><strong>Select a rat then push one of the genome buttons.</strong></p><br>
     <?php endif; ?>
