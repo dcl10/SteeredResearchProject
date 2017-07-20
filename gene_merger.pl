@@ -8,7 +8,7 @@ use strict; use warnings;
 #
 #Created by R. Gosliga 14/07/2017.
 
-my %genes; my %gene_count;
+my %genes; my %gene_count; my $gen_id = 1;
 open(INPUT, "<$ARGV[0]") or die ("Unable to open $ARGV[0]");
 
 #Removes the path from the input file and stores it for naming output files.
@@ -39,7 +39,8 @@ foreach (<INPUT>) {
 		${$genes{$gene_name}}[2] = "$1:$min-$max";
 	#Discards genes without short names by ensuring they aren't added to hash.
 	} elsif ($2 eq "-") {
-	print OUTPUT "$1\t-\t-\t$1\t$2\t$4\t$5\t-\t-\t$6\t$7\t$8\tOK\n";
+	print OUTPUT "$1\t-\t-\t$1\tUnknown$gen_id\t$4\t$5\t-\t-\t$6\t$7\t$8\tOK\n";
+	$gen_id++;
 	#Adds the gene into the hash using the short name as a key.
 	} elsif ($2=~/gene_short_name/) {
 	} else {
