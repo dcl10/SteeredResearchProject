@@ -73,13 +73,3 @@ create table rn6_stats
   dif_ex VARCHAR(5));
 LOAD DATA INFILE '/var/lib/mysql-files/rn6_stats.csv' INTO TABLE rn6_stats
   FIELDS TERMINATED BY ','IGNORE 1 LINES;
-
-DROP TABLE IF EXISTS GO_terms;
-create table GO_terms
-  (gene_id VARCHAR(20) NOT NULL PRIMARY KEY,
- gene_name VARCHAR(20),
- GO_Bio TEXT,
- GO_Cell TEXT,
- GO_Mol TEXT);
- LOAD DATA INFILE '/var/lib/mysql-files/GO_terms.csv' INTO TABLE GO_terms
-  FIELDS TERMINATED BY ',' IGNORE 1 LINES;
