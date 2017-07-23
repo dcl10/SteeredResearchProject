@@ -42,7 +42,7 @@
 
     <?php
     // Parse the configuration file and get the credentials for the database
-    $db = parse_ini_file("config_file.ini");
+    $db = parse_ini_file("../config_file.ini");
     $servername = $db['host'];
     $username = $db['user'];
     $password = $db['pass'];
