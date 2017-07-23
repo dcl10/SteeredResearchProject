@@ -42,7 +42,7 @@
 
     <?php
     // Parse the configuration file and get the credentials for the database
-    $db = parse_ini_file("../config_file.ini");
+    $db = parse_ini_file("config_file.ini");
     $servername = $db['host'];
     $username = $db['user'];
     $password = $db['pass'];
@@ -129,7 +129,7 @@ and locus.
             </div>
         </form>
         <?php
-    	if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["search"]):
+    	if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])):
         	$input = htmlspecialchars($_POST["search"]);
             if ($input) {
                 $sql = "SELECT * FROM Experimental WHERE geneID LIKE \"%$input%\"";
@@ -199,7 +199,8 @@ and locus.
             The user is presented a form allowing them to choose the genome, either rn6 or rn4,
             and the rat whose bam file they wish to add as a custom track.
         */
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["genome"]){
+	$rat = false;
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["genome"])){
         	$genome = htmlspecialchars($_POST["genome"]);
             if ($genome == "rn6") {
                 switch ($_POST["rat"]) {
@@ -243,7 +244,7 @@ and locus.
     <?php if ($rat && $_SERVER["REQUEST_METHOD"] == "POST" && $_POST["genome"]): ?>
         <p><?php echo "Current selection: Rat = ".$_POST["rat"].", Genome = ".$_POST["genome"]; ?></p>
     <embed src="<?php echo $url ?>" height="<?php echo $height ?>" width="<?php echo $width ?>">
-    <?php elseif ($_SERVER["REQUEST_METHOD"] == "POST" && !$rat && $_POST["genome"]): ?>
+    <?php elseif ($_SERVER["REQUEST_METHOD"] == "POST" && !$rat && isset($_POST["genome"])): ?>
     <!-- If the user selects a genome but no rat the user is prompted to choose a rat. -->
     <p><strong>Select a rat then push one of the genome buttons.</strong></p><br>
     <?php endif; ?>
