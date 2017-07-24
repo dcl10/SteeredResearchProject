@@ -6,7 +6,7 @@ library(limma)
 
 #Create limma design matrix
 #Could be altered include repeats and multiple variables
-groups <- c("AFL","AFL","AFL","CTRL","CTRL") 
+groups <- c("CTRL","CTRL","AFL","AFL","AFL") 
 groups <- as.factor(groups)
 design <- model.matrix(~groups)
 
@@ -51,7 +51,7 @@ merged[is.na(merged)] <- 0
 all_FPKM_rn6 <- data.table(merged)
 
 data_rn6 <- data.table(merged$gene_id, merged$CTRL1_FPKM, merged$CTRL2_FPKM, merged$AFL4_FPKM, merged$AFL6_FPKM, merged$AFL8_FPKM)
-colnames(data_rn6) <- c("gene_id","CTRL1","CTRL2","AFL4","AFL6","ALF8")
+colnames(data_rn6) <- c("gene_id","CTRL1","CTRL2","AFL4","AFL6","AFL8")
 dm_rn6 <- data_rn6[, -1]
 
 #Add small constant to prevent log error
