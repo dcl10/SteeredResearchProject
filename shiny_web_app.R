@@ -3,6 +3,8 @@ library(RMySQL)
 library(DBI)
 library(shiny)
 library(ggplot2)
+library(limma)
+library(data.table)
 
 #Load ini file from specified location 
 ini<-read.table("~/Desktop/Group_Project/config_file.ini", sep="=", col.names=c("key","value"), as.is=c(1,2))
@@ -53,11 +55,11 @@ server <- function(input, output) {
               all_FPKM_rn4$AFL8_FPKM[all_FPKM_rn4$gene_name==input$id],+
               all_FPKM_rn4$CTRL1_FPKM[all_FPKM_rn4$gene_name==input$id],+
               all_FPKM_rn4$CTRL2_FPKM[all_FPKM_rn4$gene_name==input$id],+
-              all_FPKM_rn6$AFL4_FPKM[all_FPKM_rn4$gene_name==input$id],+
-              all_FPKM_rn6$AFL6_FPKM[all_FPKM_rn4$gene_name==input$id],+
-              all_FPKM_rn6$AFL8_FPKM[all_FPKM_rn4$gene_name==input$id],+
-              all_FPKM_rn6$CTRL1_FPKM[all_FPKM_rn4$gene_name==input$id],+
-              all_FPKM_rn6$CTRL2_FPKM[all_FPKM_rn4$gene_name==input$id])
+              all_FPKM_rn6$AFL4_FPKM[all_FPKM_rn6$gene_name==input$id],+
+              all_FPKM_rn6$AFL6_FPKM[all_FPKM_rn6$gene_name==input$id],+
+              all_FPKM_rn6$AFL8_FPKM[all_FPKM_rn6$gene_name==input$id],+
+              all_FPKM_rn6$CTRL1_FPKM[all_FPKM_rn6$gene_name==input$id],+
+              all_FPKM_rn6$CTRL2_FPKM[all_FPKM_rn6$gene_name==input$id])
   
   #Get lo and hi conf FPKM value from TopHat output 
   FPKM_lo <- c(all_FPKM_rn4$AFL4_FPKM_lo[all_FPKM_rn4$gene_name==input$id],+
@@ -65,22 +67,22 @@ server <- function(input, output) {
                  all_FPKM_rn4$AFL8_FPKM_lo[all_FPKM_rn4$gene_name==input$id],+
                  all_FPKM_rn4$CTRL1_FPKM_lo[all_FPKM_rn4$gene_name==input$id],+
                  all_FPKM_rn4$CTRL2_FPKM_lo[all_FPKM_rn4$gene_name==input$id],+
-                 all_FPKM_rn6$AFL4_FPKM_lo[all_FPKM_rn4$gene_name==input$id],+
-                 all_FPKM_rn6$AFL6_FPKM_lo[all_FPKM_rn4$gene_name==input$id],+
-                 all_FPKM_rn6$AFL8_FPKM_lo[all_FPKM_rn4$gene_name==input$id],+
-                 all_FPKM_rn6$CTRL1_FPKM_lo[all_FPKM_rn4$gene_name==input$id],+
-                 all_FPKM_rn6$CTRL2_FPKM_lo[all_FPKM_rn4$gene_name==input$id])
+                 all_FPKM_rn6$AFL4_FPKM_lo[all_FPKM_rn6$gene_name==input$id],+
+                 all_FPKM_rn6$AFL6_FPKM_lo[all_FPKM_rn6$gene_name==input$id],+
+                 all_FPKM_rn6$AFL8_FPKM_lo[all_FPKM_rn6$gene_name==input$id],+
+                 all_FPKM_rn6$CTRL1_FPKM_lo[all_FPKM_rn6$gene_name==input$id],+
+                 all_FPKM_rn6$CTRL2_FPKM_lo[all_FPKM_rn6$gene_name==input$id])
   
   FPKM_hi <- c(all_FPKM_rn4$AFL4_FPKM_hi[all_FPKM_rn4$gene_name==input$id],+
                  all_FPKM_rn4$AFL6_FPKM_hi[all_FPKM_rn4$gene_name==input$id],+
                  all_FPKM_rn4$AFL8_FPKM_hi[all_FPKM_rn4$gene_name==input$id],+
                  all_FPKM_rn4$CTRL1_FPKM_hi[all_FPKM_rn4$gene_name==input$id],+
                  all_FPKM_rn4$CTRL2_FPKM_hi[all_FPKM_rn4$gene_name==input$id],+
-                 all_FPKM_rn6$AFL4_FPKM_hi[all_FPKM_rn4$gene_name==input$id],+
-                 all_FPKM_rn6$AFL6_FPKM_hi[all_FPKM_rn4$gene_name==input$id],+
-                 all_FPKM_rn6$AFL8_FPKM_hi[all_FPKM_rn4$gene_name==input$id],+
-                 all_FPKM_rn6$CTRL1_FPKM_hi[all_FPKM_rn4$gene_name==input$id],+
-                 all_FPKM_rn6$CTRL2_FPKM_hi[all_FPKM_rn4$gene_name==input$id])
+                 all_FPKM_rn6$AFL4_FPKM_hi[all_FPKM_rn6$gene_name==input$id],+
+                 all_FPKM_rn6$AFL6_FPKM_hi[all_FPKM_rn6$gene_name==input$id],+
+                 all_FPKM_rn6$AFL8_FPKM_hi[all_FPKM_rn6$gene_name==input$id],+
+                 all_FPKM_rn6$CTRL1_FPKM_hi[all_FPKM_rn6$gene_name==input$id],+
+                 all_FPKM_rn6$CTRL2_FPKM_hi[all_FPKM_rn6$gene_name==input$id])
   
   #Create summary table of gene info
   Summary <- data.table(Genome, Sample, FPKM, FPKM_lo, FPKM_hi)
