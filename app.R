@@ -30,7 +30,7 @@ dbDisconnect(con)
 ui <-fluidPage(
    
    # Application title
-  headerPanel("DDifferential gene expression between controls 
+  headerPanel("Differential gene expression between controls 
 and aflatoxin samples for selected cuttoffs"),
   
    # Sidebar with a slider input to adjust cutoff values 
