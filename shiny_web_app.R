@@ -43,7 +43,7 @@ ui <- fluidPage(
 
 #Server part of Shiny App
 #Define server function 
-server <- function(input, output) {
+server <- function(input, output, session) {
   
   output$urlText <- renderText(session$gene_id)
   
