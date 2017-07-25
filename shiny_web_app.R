@@ -36,13 +36,16 @@ ui <- fluidPage(
   
   # Show a plot 
   mainPanel(
-    plotOutput("plot")
+    plotOutput("plot"),
+    textOutput("urlText")
   )
 )
 
 #Server part of Shiny App
 #Define server function 
 server <- function(input, output) {
+  
+  output$urlText <- renderText(session$gene_id)
   
   output$plot <- renderPlot({
   
