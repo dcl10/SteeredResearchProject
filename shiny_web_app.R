@@ -5,9 +5,9 @@ library(data.table)
 
 #Get tables from local files
 all_FPKM_rn4 <- read.csv(file="/home/clm79/ShinyApps/data/rn4_FPKM.csv", header=TRUE, sep=",")
-colnames(all_FPKM_rn4) <- c("gene_id", "logFC", "P", "adjP", "t", "B", "dif_ex")
+colnames(all_FPKM_rn4) <- c("gene_name","CTRL1_FPKM","CTRL1_FPKM_lo", "CTRL1_FPKM_hi", "CTRL2_FPKM","CTRL2_FPKM_lo", "CTRL2_FPKM_hi", "AFL4_FPKM", "AFL4_FPKM_lo", "AFL4_FPKM_hi","AFL6_FPKM", "AFL6_FPKM_lo", "AFL6_FPKM_hi","AFL8_FPKM", "AFL8_FPKM_lo", "AFL8_FPKM_hi")
 all_FPKM_rn6 <- read.csv(file="/home/clm79/ShinyApps/data/rn6_FPKM.csv", header=TRUE, sep=",")
-colnames(all_FPKM_rn6) <- c("gene_id", "logFC", "P", "adjP", "t", "B", "dif_ex")
+colnames(all_FPKM_rn6) <- c("gene_name","CTRL1_FPKM","CTRL1_FPKM_lo", "CTRL1_FPKM_hi", "CTRL2_FPKM","CTRL2_FPKM_lo", "CTRL2_FPKM_hi", "AFL4_FPKM", "AFL4_FPKM_lo", "AFL4_FPKM_hi","AFL6_FPKM", "AFL6_FPKM_lo", "AFL6_FPKM_hi","AFL8_FPKM", "AFL8_FPKM_lo", "AFL8_FPKM_hi")
 
 # UI (User Interface) part of Shiny App
 ui <- fluidPage(
@@ -28,7 +28,7 @@ server <- function(input, output) {
   output$plot <- renderPlot({
     
     validate(
-      need(input$id != "", "Please enter the gene id (eg NM_001000000)")
+      need(input$id != "", "Awaiting gene id...")
     )
     
     Genome <- c(rep("rn4",5),rep("rn6",5))
