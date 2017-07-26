@@ -37,7 +37,7 @@ foreach (<INPUT>) {
 		if ($min > $2) {$min = $2};
 		if ($max > $3) {$max = $3};
 		${$genes{$gene_name}}[2] = "$1:$min-$max";
-	#Discards genes without short names by ensuring they aren't added to hash.
+	#Automatically generates unique IDs for genes lacking a short name.
 	} elsif ($2 eq "-") {
 	print OUTPUT "$1\t-\t-\t$1\tUnknown$gen_id\t$4\t$5\t-\t-\t$6\t$7\t$8\tOK\n";
 	$gen_id++;
