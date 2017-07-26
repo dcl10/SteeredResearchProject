@@ -1,34 +1,18 @@
 #Load needed packages - should all be on server 
-library(RMySQL)
-library(DBI)
 library(shiny)
 library(ggplot2)
-library(limma)
 library(data.table)
 
-#Load ini file from specified location 
-ini<-read.table("~/Desktop/Group_Project/config_file.ini", sep="=", col.names=c("key","value"), as.is=c(1,2))
-#Read contents of .ini file 
-myhost <- trimWhiteSpace(ini[1, "value"])
-myname <- trimWhiteSpace(ini[2, "value"])
-myuser <- trimWhiteSpace(ini[3, "value"])
-mypass <- trimWhiteSpace(ini[4, "value"])
-
-#Connect to databaseusing values from ini file 
-con <- dbConnect(RMySQL::MySQL(), host = myhost, user = myuser, password = mypass, dbname = myname)
-
-#Get tables from database 
-all_FPKM_rn4 <- dbReadTable(con, "rn4_FPKM")
-colnames(all_FPKM_rn4) <- c("gene_name","CTRL1_FPKM","CTRL1_FPKM_lo", "CTRL1_FPKM_hi", "CTRL2_FPKM","CTRL2_FPKM_lo", "CTRL2_FPKM_hi", "AFL4_FPKM", "AFL4_FPKM_lo", "AFL4_FPKM_hi","AFL6_FPKM", "AFL6_FPKM_lo", "AFL6_FPKM_hi","AFL8_FPKM", "AFL8_FPKM_lo", "AFL8_FPKM_hi")
-all_FPKM_rn6 <- dbReadTable(con, "rn6_FPKM")
-colnames(all_FPKM_rn6) <- c("gene_name","CTRL1_FPKM","CTRL1_FPKM_lo", "CTRL1_FPKM_hi", "CTRL2_FPKM","CTRL2_FPKM_lo", "CTRL2_FPKM_hi", "AFL4_FPKM", "AFL4_FPKM_lo", "AFL4_FPKM_hi","AFL6_FPKM", "AFL6_FPKM_lo", "AFL6_FPKM_hi","AFL8_FPKM", "AFL8_FPKM_lo", "AFL8_FPKM_hi")
-#close database connection 
-dbDisconnect(con)
+#Get tables from local files
+all_FPKM_rn4 <- read.csv(file="/home/clm79/ShinyApps/data/rn4_FPKM.csv", header=TRUE, sep=",")
+colnames(all_FPKM_rn4) <- c("gene_id", "logFC", "P", "adjP", "t", "B", "dif_ex")
+all_FPKM_rn6 <- read.csv(file="/home/clm79/ShinyApps/data/rn6_FPKM.csv", header=TRUE, sep=",")
+colnames(all_FPKM_rn6) <- c("gene_id", "logFC", "P", "adjP", "t", "B", "dif_ex")
 
 # UI (User Interface) part of Shiny App
 ui <- fluidPage(
   
-  #Get gene -id - Currently Test box input - need to link to webpage
+  #Get gene -id - Currently Test box input - preferably would link to search function 
   textInput(inputId = "id", label = "Gene_Id"),
   
   # Show a plot 
@@ -89,9 +73,9 @@ server <- function(input, output) {
     Summary <- data.table(Genome, Sample, FPKM, FPKM_lo, FPKM_hi)
     
     #Plot summary info as bar graph - use lo and hi to plot error bars 
-    ggplot(Summary, aes(x=Sample, y=FPKM, fill=Genome)) + 
+    ggplot2(Summary, aes(x=Sample, y=FPKM, fill=Genome)) +
       geom_bar(stat="identity", position=position_dodge()) +
-      geom_errorbar(aes(ymin=FPKM_lo, ymax=FPKM_hi), width=.2,
+      geom_errorbar(aes(ymin=FPKM_lo, ymax=FPKM_hi), width=.2, 
                     position=position_dodge(.9))
   })
 }
